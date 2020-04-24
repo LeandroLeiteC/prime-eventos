@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="index">
+<head>
+<title>Cadastro de Evento</title>
+
+</head>
+<body>
+	<section layout:fragment="conteudo">
+		<div class="container" style="margin-top: 80px;">
+			<form class="form-group" method="POST" th:action="@{cadastrarEvento}" th:object="${eventoDTO}" enctype="multipart/form-data">
+				<fieldset>
+					<legend>Cadastro de Evento</legend>
+					
+					<div class="row">
+						<div class="col-lg-4">
+							<div th:class="${#fields.hasErrors('nome')}? error">
+								<label for="nome">Nome do evento</label>
+								<input class="form-control" id="nome" type="text" th:field="*{nome}">
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<label for="cadaDeShow">Casa de show</label>
+							<select th:field="*{casaDeShow}">
+							    <option th:each="casas: ${casasDeShow}" th:value="${casasDeShow.id}" th:text="${casasDeShow.nome}"></option>
+							</select>
+						</div>
+
+						<div class="col-lg-2">
+							<label for="ingressos">Total de ingressos</label>		
+							<input class="form-control" id="ingressos" type="number" min="1" th:field="*{ingressosDisponiveis}">
+						</div>
+
+						<div class="col-lg-2">
+							<label for="limite">Ingressos por cliente</label>		
+							<input class="form-control" id="limite" type="number" min="1" th:field="*{limiteCliente}">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-8">
+							<label for="descricao">Descrição</label>
+							<textarea rows=4 class="form-control" id="descricao" th:field="*{descricao}"></textarea>
+						</div>
+
+						<div class="col-lg-4">
+							<label for="descricaoPequena">Descrição pequena</label>
+							<textarea rows=4 class="form-control" id="descricaoPequena" th:field="*{pequenaDescricao}"></textarea>
+						</div>				
+					</div>
+
+					<div class="row">
+						<div class="col-lg-2">
+							<label for="preco">Preço do ingresso</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">R$</span>
+								</div>
+								<input class="form-control" id="preco" type="text" th:field="*{preco}" onkeypress="$(this).mask('#.###,##', {reverse: true});" dir="rtl">
+							</div>
+						</div>
+
+						<div class="col-lg-3">
+							<label for="data">Data do evento</label>		
+							<input class="form-control" id="data" type="date" th:field="*{data}">
+						</div>
+					</div>
+					
+					<br>
+					<div class="row">
+						<div class="form-group col-lg-6">
+							<div th:class="${#fields.hasErrors('imagemCard')}? error">
+								<div class="custom-file">
+								    <input type="file" class="custom-file-input" id="imagemCard" accept=".jpg,.jpeg,.png">
+								    <label class="custom-file-label" for="customFile">Escolha uma foto para o card</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-lg-6">
+							<div th:class="${#fields.hasErrors('imagemBanner')}? error">
+								<div class="custom-file">
+								    <input type="file" class="custom-file-input" id="imagemBanner" accept=".jpg,.jpeg,.png">
+								    <label class="custom-file-label" for="customFile">Escolha uma foto para o banner</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" style="margin-top: 10px;">
+						<div class="col-lg-4">
+							<button type="submit" class="btn btn-primary">Cadastrar</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+		
+	</section>
+
+	<th:block layout:fragment="javascript-extra">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    	
+    	<script>
+			$(".custom-file-input").on("change", function() {
+			  var fileName = $(this).val().split("\\").pop();
+			  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+			});
+		</script>
+    </th:block>
+</body>
+</html>

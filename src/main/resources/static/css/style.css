@@ -1,0 +1,181 @@
+/********************/
+/*      NavBar      */
+/********************/
+
+
+.navbar{
+	background: #3867d6;
+}
+
+.navbar-brand {
+	color: white;
+}
+
+.navbar-brand:hover{
+	color: #fff;
+}
+
+li a.nav-link{
+	color: white !important;
+}
+
+li a.nav-link:hover {
+	color: black !important;
+}
+
+/* Login */
+
+div #login-form {	
+	text-align: center;
+}
+
+.login-form{
+	min-width: 250px;
+	padding: 10px;
+	overflow:hidden;
+	background-color: rgba(56, 103,214, 84, 0.3);
+}
+
+.login-form input{
+	margin-bottom: 10px;
+}
+
+.login-form button{
+	width: 100%;
+	line-height: 1.3em;
+}
+
+#forgot-pass {
+	font-size: 14px;
+}
+
+@media(max-width:991px){
+    #login-form, #adm-menu{
+        background-color: #3867d6;
+        color: #fff;
+        
+    }
+    
+    #adm-menu{
+    	max-width: 250px;
+    	border: none;
+    }
+    
+    #adm-menu a {
+    	color: #fff;
+    }
+    
+    #adm-menu a:hover {
+    	background: none;
+    	color: black;
+    }
+
+    #forgot-pass {
+    	color: white;
+    }
+    #forgot-pass:hover {
+    	color: white;
+    }
+}
+
+ul li.nav-item {
+	margin-left: 50px;
+}
+
+
+
+/********************/
+/*     Contato      */
+/********************/
+
+.contato {
+	display: inline-block;
+}
+
+#contato {
+	border: 4px solid black;
+	border-radius: 15px;
+	padding:10px;
+	max-width: 500px;
+	background: rgba(149, 175, 192, 0.1);
+	margin-top: 100px;
+}
+
+
+
+/********************/
+/*     Conteudo     */
+/********************/
+
+/* Carousel */
+
+#conteudo {
+	margin-top: 55px;
+}
+
+/* Cards */
+
+.card {
+	margin: 0 auto;
+}
+
+/* Cadastro */
+#form-cliente {
+	border: 5px solid #3867d6;
+	border-radius: 30px;
+	padding: 10px;
+}
+
+#cadastro-botao {
+	height: 2em;
+	line-height: 1em;
+	width: 80%;
+}
+
+.error input{
+	border: 1px solid red;
+}
+
+
+/********************/
+/*      Footer      */
+/********************/
+
+
+/* #footer {
+	background: #3867d6;
+	text-align: center;
+	padding-top: 5px;
+ 	position: absolute;
+ 	bottom: 0;
+ 	width: 100%;
+  	height: 2.5rem;
+}
+*/
+
+#page-container {
+  border: 0.5px solid blue;
+  position: relative;
+  min-height: 100vh;
+}
+
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  margin: 0 auto;
+}
+
+/********************/
+/*     Empresas     */
+/********************/
+
+#evento-form label {
+	border: none;
+	padding-left: 0;
+	padding: 0;
+}
+
+input.form-control {
+	height: 2.5em !important;	
+}

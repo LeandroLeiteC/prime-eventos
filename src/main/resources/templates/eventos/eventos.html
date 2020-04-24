@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="index">
+<head>
+<title>Prime Eventos - Eventos</title>
+</head>
+<body>
+
+	<section layout:fragment="conteudo">
+	
+		<div id="eventos" style="margin-top: 80px;">
+				<div class="container" style="background: ">
+					<div id="eventos-title" class="mb-5 text-center">
+						<h1>Eventos</h1>
+					</div>
+					
+					<div class="row justify-content-around">
+					
+						<div th:each="evento: ${eventos}">
+							
+							<div class="col-lg-4 col-md-6 mb-5">
+								<div class="card" style="width: 18rem;">
+								  	<img class="card-img-top" th:src="@{'data:image/jpge;base64,'+${evento.imagem64}}" alt="Card image cap" width="286px" height="180px">
+								  	<div class="card-body">
+								    	<h5 class="card-title" th:text="${evento.nome}">Card title</h5>
+								    	<p class="card-text" th:text="${evento.pequenaDescricao}">Descrição pequena</p>
+								    	<a href="#" class="btn btn-primary">Mais detalhes</a>
+								  	</div>
+								</div>
+							</div>
+						
+						</div>
+					</div>
+				</div>	
+			</div>
+	</section>
+
+</body>
+</html>

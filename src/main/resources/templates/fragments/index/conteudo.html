@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="index">
+<head>
+<title>Prime Eventos</title>
+</head>
+<body>
+
+	<section layout:fragment="conteudo">
+		<div id="conteudo">
+			<div id="carousel">
+				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+				 	<ol class="carousel-indicators">
+				    	<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+				    	<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+				    	<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				  	</ol>
+				  	<div class="carousel-inner">
+
+				    	<div class="carousel-item active">
+				    		<a href="#">
+				      			<img class="d-block w-100" src="https://images.unsplash.com/photo-1586876636868-4f03c27a2897?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixlib=rb-1.2.1&q=80&w=1920">
+				      		</a>
+				      		<div class="carousel-caption d-none d-md-block">
+							    <h5>Primeiro item</h5>
+								<p>Pequena descrição da foto</p>
+							</div>
+				    	</div>
+
+				    	<div class="carousel-item">
+				    		<a href="#">
+				      			<img class="d-block w-100" src="https://images.unsplash.com/photo-1584868215137-8c085ed5269e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixlib=rb-1.2.1&q=80&w=1920">
+				      		</a>
+				      		<div class="carousel-caption d-none d-md-block">
+							    <h5>Segundo item</h5>
+								<p>Pequena descrição da foto</p>
+							</div>
+				   		</div>
+
+				    	<div class="carousel-item">
+				    		<a href="#">
+				      			<img class="d-block w-100" src="https://images.unsplash.com/photo-1585879304131-665d6cf7ee21?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixlib=rb-1.2.1&q=80&w=1920">
+				      		</a>
+				      		<div class="carousel-caption d-none d-md-block">
+							    <h5>Terceiro item</h5>
+								<p>Pequena descrição da foto</p>
+							</div>
+				    	</div>
+
+				  	</div>
+				  	<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				    	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    	<span class="sr-only">Anterior</span>
+				  	</a>
+				  	<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				    	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    	<span class="sr-only">Próximo</span>
+				  	</a>
+				</div>
+			</div>
+
+			<hr style="margin-top: 50px;">
+
+			<div id="eventos" style="margin-top: 30px;">
+				<div class="container" style="background: ">
+					<div id="eventos-title" class="mb-5 text-center">
+					<div class="row justify-content-between" style="margin: 0 10px;">
+						<h3>Eventos em destaque</h3>
+						<a class="align-self-center" th:href="@{/eventos/}">Ver mais</a>
+					</div>
+					</div>
+					
+					<div class="row">
+					
+						<div class="col-lg-4 col-md-6 mb-5">
+							<div class="card" style="width: 18rem;">
+							  	<img class="card-img-top" src="https://images.unsplash.com/photo-1585520523655-ccd7931e09e3?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=180&ixlib=rb-1.2.1&q=80&w=286" alt="Card image cap" width="286px" height="180px">
+							  	<div class="card-body">
+							    	<h5 class="card-title">Card title</h5>
+							    	<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							    	<a href="#" class="btn btn-primary">Mais detalhes</a>
+							  	</div>
+							</div>
+						</div>
+
+						<div class="col-lg-4 col-md-6 mb-5">
+							<div class="card" style="width: 18rem;">
+							  	<img class="card-img-top" src="https://images.unsplash.com/photo-1584889209092-267b7ffbfcd2?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=180&ixlib=rb-1.2.1&q=80&w=286" alt="Card image cap" width="286px" height="180px">
+							  	<div class="card-body">
+							    	<h5 class="card-title">Card title</h5>
+							    	<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							    	<a href="#" class="btn btn-primary">Mais detalhes</a>
+							  	</div>
+							</div>
+						</div>
+
+						<div class="col-lg-4 col-md-6 mb-5">
+							<div class="card" style="width: 18rem;">
+							  	<img class="card-img-top" src="https://images.unsplash.com/photo-1585144287422-b55773df5c5e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=180&ixlib=rb-1.2.1&q=80&w=286" alt="Card image cap" width="286px" height="180px">
+							  	<div class="card-body">
+							    	<h5 class="card-title">Card title</h5>
+							    	<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							    	<a href="#" class="btn btn-primary">Mais detalhes</a>
+							  	</div>
+							</div>
+						</div>
+	
+					</div>
+				</div>	
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

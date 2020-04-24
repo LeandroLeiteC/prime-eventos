@@ -1,0 +1,41 @@
+package com.leandro.webeventos.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.leandro.webeventos.model.Cliente;
+import com.leandro.webeventos.model.PerfilTipo;
+import com.leandro.webeventos.repository.ClienteRepository;
+
+@Service
+public class ClienteService {
+
+	private ClienteRepository repository;
+	private UsuarioService service;
+
+	@Autowired
+	public ClienteService(ClienteRepository repository, UsuarioService service) {
+		this.repository = repository;
+		this.service = service;
+	}
+
+	@Transactional(readOnly = true)
+	public boolean emailJaExiste(String email) {
+		if (service.buscarPorEmail(email) != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Transactional(readOnly = false)
+	public void cadastrarNovoUsuario(Cliente cliente) {
+		String crypt = new BCryptPasswordEncoder().encode(cliente.getUsuario().getPassword());
+		cliente.getUsuario().setPassword(crypt);
+		cliente.getUsuario().addPerfil(PerfilTipo.CLIENTE);
+		cliente.getUsuario().setAtivo(true);
+		repository.save(cliente);
+	}
+}
