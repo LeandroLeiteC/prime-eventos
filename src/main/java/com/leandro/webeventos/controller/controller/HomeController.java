@@ -41,7 +41,7 @@ public class HomeController {
 			e.transformaDados();
 		}
 		model.addAttribute("eventos", eventos);
-		return "fragments/index/conteudo";
+		return "/fragments/index/conteudo";
 	}
 	
 	
