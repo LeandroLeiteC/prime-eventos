@@ -34,7 +34,7 @@ public class HomeController {
 		this.clienteService = clienteService;
 	}
 
-	@GetMapping("")
+	@GetMapping("/")
 	public String principal(ModelMap model) {
 		List<Evento> eventos = service.buscarTop3();
 		for(Evento e : eventos) {
