@@ -28,10 +28,10 @@
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						          Administração
 						    </a>
-					        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="adm-menu">
-						          <a class="dropdown-item" th:href="@{/admin/cadastro/evento}">Cadastro de Evento</a>
-						          <a class="dropdown-item" th:href="@{/admin/cadastro/casa-de-show}">Cadastro de Casa de Show</a>
-						          <a class="dropdown-item" th:href="@{/admin/cadastro/novo-admin}">Cadastrar novo Admin</a>
+					        <div class="dropdown-menu"  id="adm-menu">
+						          <a class="dropdown-item underlineHover" th:href="@{/admin/cadastro/evento}">Cadastro de Evento</a>
+						          <a class="dropdown-item underlineHover" th:href="@{/admin/cadastro/casa-de-show}">Cadastro de Casa de Show</a>
+						          <a class="dropdown-item underlineHover" th:href="@{/admin/cadastro/novo-admin}">Cadastrar novo Admin</a>
 					        </div>
 		  				</div>
 	  				</li>
@@ -56,11 +56,6 @@
 									          		<input class="form-control" type="password" name="password" placeholder="Senha">
 									          		<div class="text-right mb-2"><a id="forgot-pass" class="underlineHover" href="#">Esqueceu sua senha?</a></div>
 									          		<button type="submit" class="btn btn-primary">Login</button>
-									          		<div class="checkbox mt-2 mb-0" id="remember">
-														<label>
-														<input type="checkbox"> Matenha Contectado
-														</label>
-													</div>
 													<hr>
 									          	</form>
 									          	<div class="mb-0">
@@ -80,14 +75,22 @@
 				 			</div>
 				 		</div>
 				    </li>
-				    
-				    <li class="nav-item">
-		  				<div sec:authorize="isAuthenticated()">
-		  					<form th:action="@{/logout}" method="POST">
-		  						<button type="submit" class="btn text-white" style="padding-left: 0;">Sair</button>
-		  					</form>
-		  				</div>				    
-				    </li>	    							    
+
+				    <li	class="nav-item dropdown">
+				    	<div sec:authorize="isAuthenticated()">
+				    		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						          <i class="fas fa-user-circle" style="font-size: 22px;"></i>
+						    </a>
+					        <div class="dropdown-menu dropdown-menu-right" id="perfil">
+					        	<h5 class="dropdown-header" th:text="${session.nome}">Nome do cliente</h5>
+					        	<a th:href="@{/cliente/compras}" class="underlineHover link ml-4" style="color:black;">Minhas compras</a>
+					          	<form class="dropdown-item" th:action="@{/logout}" method="POST" id="perfil" style="padding: 0">
+		  							<button type="submit" class="btn underlineHover ml-4" style="padding: 0;">Sair</button>
+		  						</form>
+					        </div>
+				    	</div>
+				    </li>
+				      							    
 				</ul>
 				
   			</div>

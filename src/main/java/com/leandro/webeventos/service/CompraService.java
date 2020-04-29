@@ -75,4 +75,9 @@ public class CompraService {
 		}
 		return comprado;
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Compra> buscarComprasDoCliente(Cliente cliente){
+		return cliente.getCompras();
+	}
 }

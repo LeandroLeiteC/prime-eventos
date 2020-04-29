@@ -1,5 +1,7 @@
 package com.leandro.webeventos.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,9 +34,9 @@ public class ClienteService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Cliente buscarPorUsuario(String email) {
+	public Optional<Cliente> buscarPorUsuario(String email) {
 		Usuario usuario = service.buscarPorEmail(email).get();
-		Cliente cliente = repository.findByUsuario(usuario);
+		Optional<Cliente> cliente = repository.findByUsuario(usuario);
 		return cliente;
 	}
 

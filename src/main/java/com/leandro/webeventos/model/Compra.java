@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -25,7 +26,7 @@ public class Compra extends EntidadeBase {
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
-	@ManyToMany(mappedBy = "compra", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToMany(mappedBy = "compra", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	private Set<CompraEvento> compraEventos;
 
 	@Column(name = "hora_da_venda", nullable = false)

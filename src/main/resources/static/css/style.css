@@ -50,26 +50,35 @@ div #login-form {
 }
 
 @media(max-width:991px){
-    #login-form, #adm-menu{
+    #login-form, #adm-menu, #perfil{
         background-color: #3867d6;
         color: #fff;
         
     }
-    
-    #adm-menu{
+       
+    #adm-menu, #perfil{
     	max-width: 250px;
     	border: none;
     }
     
-    #adm-menu a {
+
+    #adm-menu a, #perfil a {
+    	color: #fff !important;
+    }
+    
+    #perfil button{
     	color: #fff;
     }
     
+    #perfil h5 {
+    	color: #fff;
+    }
+    
+    
     #adm-menu a:hover {
     	background: none;
-    	color: black;
     }
-
+    
     #forgot-pass {
     	color: white;
     }
