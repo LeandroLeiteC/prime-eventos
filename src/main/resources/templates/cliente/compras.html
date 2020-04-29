@@ -4,45 +4,49 @@
 	layout:decorator="index">
 <head>
 <title>Prime Eventos - Compras</title>
+<link rel="stylesheet" th:href="@{/css/compras.css}">
 </head>
 <body>
 
 	<section class="container" layout:fragment="conteudo" style="margin-top: 100px;">
 		
 		<div th:if="${#lists.size(compras) > 0}">
-			<h1>Histórico de compras</h1>
-			<div class="row justify-content-around">
-				<div class="col-12">
-					<div th:each="compra: ${compras}">
-						<table class="table table-striped table-sm" style="width: 60%;">
-					       <thead>
-					           <tr class="text-center">
-					               <th th:text="'Compra#' + ${compra.id}"> </th>
-					               <th>Evento</th>
-					               <th class="text-center">Quantidade</th>
-					               <th class="text-center">Subtotal</th>
-					           </tr>
-					       </thead>
-					       <tbody>
-					       	<tr th:each="compraEvento: ${compra.compraEventos}" class="text-center" style="font-size: 1.1em; line-height: 2em;">
-					               <td><img th:src="@{'data:image/jpge;base64,' + ${compraEvento.evento.imagemCard64}}" width="70px;"/></td>
-					               <td th:text="${compraEvento.evento.nome}">Nome do Evento</td>
-					               <td style="padding: auto 0">
-					               	<span th:text="${compraEvento.qtdIngresso}"></span>
-					               </td>
-					               <td class="text-center" th:text="'R$ ' + ${#numbers.formatDecimal(compraEvento.subtotal, 0, 'POINT', 2, 'COMMA')}"></td>
-					           </tr>
-					           <tr class="text-right">
-					               <td></td>
-					               <td></td>
-					               <td></td>
-					               <td><strong th:text="'Total: ' + ' R$ ' + ${#numbers.formatDecimal(compra.total, 0, 'POINT', 2, 'COMMA')}"></strong></td>
-					           </tr>
-					       </tbody>
-				    	</table>
-				    	<hr>		
-					</div>
-				</div>
+			<h1 class="text-center">Histórico de compras</h1>
+			<div id="integration-list">
+    			<ul>
+					<li th:each="compra: ${compras}">
+			            <a class="expand">
+			                <i class="right-arrow">+</i>
+		                    <h2 th:text="'Compra#' + ${compra.id} + ' - ' + ${#temporals.format(compra.hora, 'dd/MM/yyy HH:mm:ss')}">Número da compra</h2>
+		                    <span th:text="'Total: R$ ' + ${#numbers.formatDecimal(compra.total, 0, 'POINT', 2, 'COMMA')}">detalhes</span>
+			            </a>
+						<div class="detail">
+							<div th:each="compraEvento: ${compra.compraEventos}">
+								<hr>
+								<div class="row mb-2">
+			                		<div id="left" style="width:15%;float:left;height:100%;">
+					                    <div id="sup" class="text-center">
+					                        <img th:src="@{'data:image/jpge;base64,' + ${compraEvento.evento.imagemCard64}}" width="60%" />
+					                    </div>
+				                	</div>
+				                	<div id="right" style="width:85%;float:right;height:100%;padding-left:20px;">
+				                    	<div id="sup">
+					                        <div>
+					                        	<strong><span th:text="${compraEvento.evento.nome}"></span><br/></strong>
+					                        	<span th:text="${compraEvento.evento.pequenaDescricao}"></span><br/>
+					                        	<span th:text="'Quantidade: ' + ${compraEvento.qtdIngresso} + ' | Valor unitário: R$' + ${#numbers.formatDecimal(compraEvento.evento.preco, 0, 'POINT', 2, 'COMMA')}
+					                        		+ ' | Subtotal: R$' + ${#numbers.formatDecimal(compraEvento.subtotal, 0, 'POINT', 2, 'COMMA')}"></span>
+					                            <br />
+					                            <br /><a th:href="@{/eventos/{id}(id = ${compraEvento.evento.id})}" class="btn btn-primary">Ver evento</a>
+					                        </div>
+				                    	</div>
+				                	</div>
+				                </div>
+				                <hr>
+			            	</div>
+		            	</div>
+		        	</li>
+	      		</ul>
 			</div>
 		</div>
 		<div th:unless="${#lists.size(compras) > 0}">
@@ -54,6 +58,22 @@
 		</div>
 		
 	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script>
+			$(function() {
+			  $(".expand").on( "click", function() {
+			    $(this).next().slideToggle(200);
+			    $expand = $(this).find(">:first-child");
+			    
+			    if($expand.text() == "+") {
+			      $expand.text("-");
+			    } else {
+			      $expand.text("+");
+			    }
+			  });
+			});
+		</script>
+	</th:block>
 	
 </body>
 </html>

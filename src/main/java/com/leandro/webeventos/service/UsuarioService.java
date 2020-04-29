@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,5 +52,12 @@ public class UsuarioService implements UserDetailsService {
 			authorities[i] = perfis.get(i).getDescricao();
 		}
 		return authorities;
+	}
+	
+	@Transactional(readOnly = false)
+	public void atualizarSenha(Usuario usuario) {
+		String crypt = new BCryptPasswordEncoder().encode(usuario.getPassword());
+		usuario.setPassword(crypt);
+		repository.save(usuario);
 	}
 }

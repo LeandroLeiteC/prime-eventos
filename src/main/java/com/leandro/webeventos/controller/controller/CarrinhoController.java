@@ -55,6 +55,11 @@ public class CarrinhoController {
 	public String adicionar(@PathVariable("id") Long id, RedirectAttributes attr) {
 		Cliente cliente = getCliente();
 		Evento evento = service.buscarPorId(id);
+		if(evento.getIngressosDisponiveis() == 0) {
+			attr.addFlashAttribute("alerta", "erro");
+			attr.addFlashAttribute("texto", "Esse evento não tem mais ingressos disponíveis para compra.");
+			return "redirect:/eventos/"+id;
+		}
 		int ingressosParaComprar = compraService.podeComprar(cliente, evento);
 		if(ingressosParaComprar > 0) {
 			evento.transformaDados();

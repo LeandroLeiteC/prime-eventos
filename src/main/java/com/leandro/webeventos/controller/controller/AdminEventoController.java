@@ -156,4 +156,14 @@ public class AdminEventoController {
 		model.addAttribute("titulo", "Atualizar Evento");
 		return "administracao/cadastroEvento";
 	}
+	
+	@GetMapping("eventos")
+	public String todosEventos(ModelMap model) {
+		List<Evento> eventos = service.buscarTodosAdmin();
+		for(Evento e : eventos) {
+			e.transformaDados();
+		}
+		model.addAttribute("eventos", eventos);
+		return "eventos/eventos";
+	}
 }

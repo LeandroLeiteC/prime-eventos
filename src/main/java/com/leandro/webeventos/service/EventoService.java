@@ -30,13 +30,20 @@ public class EventoService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Evento> buscarTodos() {
-		return repository.findAll();
+	public List<Evento> buscarTodosCliente() {
+		return repository.findTodos();
 	}
 	
 	@Transactional(readOnly = true)
+	public List<Evento> buscarTodosAdmin() {
+		return repository.findAll();
+	}
+	
+	
+	
+	@Transactional(readOnly = true)
 	public List<Evento> buscarTop3(){
-		return repository.findTop3ByOrderByDataAsc();
+		return repository.findFirst3();
 	}
 
 	@Transactional(readOnly = true)

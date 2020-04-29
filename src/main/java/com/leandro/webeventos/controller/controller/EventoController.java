@@ -25,7 +25,7 @@ public class EventoController {
 	
 	@GetMapping("/")
 	public String eventos(ModelMap model) {
-		List<Evento> eventos = service.buscarTodos();
+		List<Evento> eventos = service.buscarTodosCliente();
 		for(Evento e : eventos) {
 			e.transformaDados();
 		}

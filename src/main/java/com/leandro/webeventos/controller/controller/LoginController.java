@@ -1,5 +1,7 @@
 package com.leandro.webeventos.controller.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +14,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.leandro.webeventos.controller.dto.ClienteDTO;
+import com.leandro.webeventos.controller.dto.UsuarioDTO;
 import com.leandro.webeventos.model.Cliente;
+import com.leandro.webeventos.model.Usuario;
 import com.leandro.webeventos.service.ClienteService;
+import com.leandro.webeventos.service.UsuarioService;
 
 @Controller
 public class LoginController {
 
 	private ClienteService service;
+	private UsuarioService usuarioService;
 
 	@Autowired
-	public LoginController(ClienteService service) {
+	public LoginController(ClienteService service, UsuarioService usuarioService) {
 		this.service = service;
+		this.usuarioService = usuarioService;
 	}
-	
+
 	@GetMapping("login")
 	public String login(@RequestParam(required = false, name = "error") String error, ModelMap model) {
-		if(error != null) {
+		if (error != null) {
 			model.addAttribute("alerta", "erro");
 			model.addAttribute("texto", "Email ou senha inválidos.");
 		}
@@ -65,11 +72,43 @@ public class LoginController {
 			return "cadastro/new-cadastro";
 		}
 	}
-	
-	@GetMapping("/accesso-negado")
+
+	@GetMapping("accesso-negado")
 	public String acessDeniedController(ModelMap model) {
 		model.addAttribute("title", "Acesso Negado");
 		return "accesso-negado";
 	}
-	
+
+	@GetMapping("esqueceu")
+	public String esqueceuSenha(ModelMap model) {
+		model.addAttribute("usuarioDTO", new UsuarioDTO());
+		return "esqueceu";
+	}
+
+	@PostMapping("esqueceu")
+	public String processEsqueceu(@Valid @ModelAttribute("usuarioDTO") UsuarioDTO usuarioDTO, BindingResult result,
+			ModelMap model) {
+
+		if (result.hasErrors()) {
+			return "esqueceu";
+		}
+		
+		Optional<Usuario> user = usuarioService.buscarPorEmail(usuarioDTO.getEmail());
+		
+		if(!user.isPresent()) {
+			model.addAttribute("alerta", "erro");
+			model.addAttribute("texto", "Email não encontrado");
+		}else if(!usuarioDTO.equalPassword()) {
+			model.addAttribute("alerta", "erro");
+			model.addAttribute("texto", "Senhas não são iguais");
+		}else {
+			Usuario usuario = user.get();
+			usuario.setPassword(usuarioDTO.getPassword());
+			usuarioService.atualizarSenha(usuario);
+			model.addAttribute("alerta", "sucesso");
+			model.addAttribute("texto", "Senha atualizada!");
+		}
+
+		return "esqueceu";
+	}
 }
