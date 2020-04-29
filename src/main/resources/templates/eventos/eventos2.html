@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="index">
+<head>
+<title>Prime Eventos - Eventos</title>
+</head>
+<body>
+
+	<section layout:fragment="conteudo">
+	
+		<div id="eventos" style="margin-top: 80px;">
+				<div class="container">
+					<div id="eventos-title" class="mb-5 text-center">
+					<div class="row">
+						<div class="col-lg-3 col-md-2 col-sm-1 col-2 align-self-center">
+							<a th:href="@{/}" id="voltar" style="font-size: 20px;">
+								<i class="fas fa-arrow-left"></i>
+								Home
+							</a>
+						</div>
+						<div class="col-lg-4 col-md-2 col-sm-2 col-4" style="margin: 0 auto;">
+							<h1>Eventos</h1>
+						</div>
+						<div class="col-3">
+						
+						</div>
+					</div>
+						
+					</div>
+					
+					<div class="row justify-content-around">
+					
+						<div th:each="evento: ${eventos}">
+							
+							<div class="col-lg-4 col-md-6 mb-5">
+								<div class="card" style="width: 18rem; max-height: 30rem;">
+								  	<img class="card-img-top" th:src="@{'data:image/jpge;base64,'+${evento.imagemCard64}}" width="286px" height="180px">
+								  	<div class="card-body">
+								    	<h5 class="card-title" th:text="${evento.nome}">Card title</h5>
+								    	<p class="card-text text-justify" style="height: 100px; "th:text="${evento.pequenaDescricao}">Descrição pequena</p>
+								    	<div class="row justify-content-between" style="margin:0">
+									    	<p class="mb-0" th:text="${evento.casaDeShow.cidade} + ' - ' + ${evento.casaDeShow.uf}"></p>
+									    	<p style="margin-bottom: 0px" th:text="${evento.dataString}"></p>
+								    	</div>
+								    	<div>
+								    		<p style="margin-top: 0" class="text-right" th:text="'Preço unitário: ' +  'R$ ' + ${#numbers.formatDecimal(evento.preco, 0, 'POINT', 2, 'COMMA')}"></p>
+								    	</div>
+								    	
+								    	<div class="row justify-content-between">
+								    		<div class="col-3">
+								    			<div sec:authorize="hasAuthority('ADMIN')">
+									    			<a th:href="@{/admin/atualizar/{id}(id = ${evento.id})}" class="btn btn-success">Editar</a>
+									    		</div>
+									    	</div>
+									    	
+								    		<div class="col-7">
+								    			<a th:href="@{/eventos/{id}(id = ${evento.id})}" class="btn btn-primary">Mais detalhes</a>
+								    		</div>
+								    	</div>
+								    	
+								  	</div>
+								</div>
+							</div>
+						
+						</div>
+					</div>
+				</div>	
+			</div>
+	</section>
+</body>
+</html>

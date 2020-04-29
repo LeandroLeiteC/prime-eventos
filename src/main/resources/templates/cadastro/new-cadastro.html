@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+	<title>Prime Eventos - Cadastro</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/cadastro.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/vendors/bootstrap.min.css}">
+	<link rel="shortcut icon" th:href="@{/img/favicon.png}"/>
+	<script src="https://kit.fontawesome.com/cbc2003b8f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<div class="wrapper fadeInDown">
+  		<div id="formContent">
+   	 	<!-- Tabs Titles -->
+
+    	<!-- Icon -->
+    	<div class="fadeIn first">
+      		<img th:src="@{/img/PrimeLogo.png}" id="icon" alt="User Icon"/>
+    	</div>
+
+	    <!-- Login Form -->
+	    <form method="POST" th:action="@{/cadastro}" th:object="${clienteDTO}">
+	    	<div th:class="${#fields.hasErrors('nome')}? error">
+				<input type="text" class="fadeIn second" placeholder="Nome Completo" th:field="*{nome}">
+			</div>
+			<div th:class="${#fields.hasErrors('usuario.email')}? error">
+	      		<input type="email" class="fadeIn second" placeholder="E-mail" th:field="*{usuario.email}">
+		    </div>
+	     	<div th:class="${#fields.hasErrors('usuario.password')}? error">
+		      	<input type="password" class="fadeIn third" placeholder="Senha" th:field="*{usuario.password}">
+	      	</div>
+	     	<div th:class="${#fields.hasErrors('usuario.confirmPassword')}? error"> 
+		      	<input type="password" class="fadeIn third" placeholder="Confirme sua senha" th:field="*{usuario.confirmPassword}">
+	      	</div>
+		      <input type="submit" class="fadeIn fourth" value="Cadastrar">
+	    </form>
+	    <div class="row justify-content-around">
+	    	<div class="col-10">
+	    		<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+										 role="alert" style="border-radius: 10px;">
+			  		<p th:text="${texto}" style="margin-bottom: 0px;">Há Campos inválidos</p>
+				</div>
+	    	</div>
+		    
+	    </div>
+	   	
+
+	    <div id="formFooter" style="padding: 20px;">
+	    	<div class="row justify-content-around">
+	    		<div class="col-4">
+		    		<a class="underlineHover" th:href="@{/}"><i class="fas fa-home"></i>&nbsp Home</a>
+		      	</div>
+		      	
+		      	<div class="col-6">
+		      		Já tem uma conta? <a th:href="@{/login}" class="underlineHover">Login</a>
+		      	</div>
+		    </div>
+	    </div>
+
+  	</div>
+  	
+</div>
+</body>
+</html>

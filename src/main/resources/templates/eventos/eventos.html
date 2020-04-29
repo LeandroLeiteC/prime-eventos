@@ -4,37 +4,92 @@
 	layout:decorator="index">
 <head>
 <title>Prime Eventos - Eventos</title>
+<link rel="stylesheet" th:href="@{/css/card.css}">
 </head>
 <body>
 
 	<section layout:fragment="conteudo">
 	
 		<div id="eventos" style="margin-top: 80px;">
-				<div class="container" style="background: ">
+				<div class="container">
 					<div id="eventos-title" class="mb-5 text-center">
-						<h1>Eventos</h1>
-					</div>
-					
-					<div class="row justify-content-around">
-					
-						<div th:each="evento: ${eventos}">
-							
-							<div class="col-lg-4 col-md-6 mb-5">
-								<div class="card" style="width: 18rem;">
-								  	<img class="card-img-top" th:src="@{'data:image/jpge;base64,'+${evento.imagem64}}" alt="Card image cap" width="286px" height="180px">
-								  	<div class="card-body">
-								    	<h5 class="card-title" th:text="${evento.nome}">Card title</h5>
-								    	<p class="card-text" th:text="${evento.pequenaDescricao}">Descrição pequena</p>
-								    	<a href="#" class="btn btn-primary">Mais detalhes</a>
-								  	</div>
-								</div>
-							</div>
+					<div class="row">
+						<div class="col-lg-3 col-md-2 col-sm-1 col-2 align-self-center">
+							<a th:href="@{/}" id="voltar" style="font-size: 20px;">
+								<i class="fas fa-arrow-left"></i>
+								Home
+							</a>
+						</div>
+						<div class="col-lg-4 col-md-2 col-sm-2 col-4" style="margin: 0 auto;">
+							<h1>Eventos</h1>
+						</div>
+						<div class="col-3">
 						
 						</div>
+					</div>
+						
+					</div>
+					<div class="row active-with-click">
+						<div class="col-md-4 col-sm-6 col-xs-12" th:each="evento: ${eventos}">
+							<article class="material-card Red">
+								<h2>
+									<a class="text-white underlineHover" th:href="@{/eventos/{id}(id = ${evento.id})}" th:text="${evento.nome}">Nome do evento</a> <strong> 
+									<i class="fas fa-map-marker-alt"></i>
+									<i th:text="${evento.casaDeShow.cidade} + '-' + ${evento.casaDeShow.uf}"></i>
+									</strong>
+								</h2>
+								<div class="mc-content">
+									<div class="img-container">
+										<img class="img-responsive"
+											th:src="@{'data:image/jpge;base64,'+${evento.imagemCard64}}">
+									</div>
+									<div class="mc-description" th:text="${evento.pequenaDescricao}">Pequena descrição</div>
+								</div>
+								<a class="mc-btn-action"> <i class="fa fa-bars"></i>
+								</a>
+								<div class="mc-footer text-center">
+									<h4 th:text="${#dates.format(evento.data, 'dd') + ' de ' + #dates.format(evento.data, 'MMMM') + ' de ' + #dates.format(evento.data, 'yyyy')}">Data</h4>
+									<a th:href="@{/eventos/{id}(id = ${evento.id})}" class="btn btn-lg btn-primary">Mais detalhes</a>
+									<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/atualizar/{id}(id = ${evento.id})}" class="btn btn-lg btn-info">Editar</a>
+								</div>
+							</article>
+						</div>
+
 					</div>
 				</div>	
 			</div>
 	</section>
+	<th:body layout:fragment="javascript-extra">
+		<script>
+			$(function() {
+				$('.material-card > .mc-btn-action').click(
+						function() {
+							var card = $(this).parent('.material-card');
+							var icon = $(this).children('i');
+							icon.addClass('fa-spin-fast');
 
+							if (card.hasClass('mc-active')) {
+								card.removeClass('mc-active');
+
+								window.setTimeout(function() {
+									icon.removeClass('fa-arrow-left')
+											.removeClass('fa-spin-fast')
+											.addClass('fa-bars');
+
+								}, 800);
+							} else {
+								card.addClass('mc-active');
+
+								window.setTimeout(function() {
+									icon.removeClass('fa-bars').removeClass(
+											'fa-spin-fast').addClass(
+											'fa-arrow-left');
+
+								}, 800);
+							}
+						});
+			});
+		</script>
+	</th:body>
 </body>
 </html>

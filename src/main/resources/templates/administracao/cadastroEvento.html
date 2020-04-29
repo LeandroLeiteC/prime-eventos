@@ -3,15 +3,33 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="index">
 <head>
-<title>Cadastro de Evento</title>
+<title>Admin - Evento</title>
 
 </head>
 <body>
 	<section layout:fragment="conteudo">
 		<div class="container" style="margin-top: 80px;">
-			<form class="form-group" method="POST" th:action="@{cadastrarEvento}" th:object="${eventoDTO}" enctype="multipart/form-data">
+			<div class="col-lg-3 col-md-2 col-sm-1 col-2 align-self-center">
+				<a th:href="@{/}" id="voltar" style="font-size: 20px;">
+					<i class="fas fa-arrow-left"></i>
+					Home
+				</a>
+			</div>
+			<form class="form-group" method="POST" th:action="@{/admin/cadastro/cadastrar-evento}" th:object="${evento}" enctype="multipart/form-data">
 				<fieldset>
-					<legend>Cadastro de Evento</legend>
+					<legend th:text="${titulo}">Cadastro de Evento</legend>
+					<div class="row">
+						<div class="col-lg-12">
+							<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+												 role="alert" style="border-radius: 10px;">
+								 <p th:text="${texto}" style="margin-bottom: 0px;"></p>
+							</div>
+						</div>
+					</div>
+					
+					<input type="hidden" th:field="*{id}">
+					<input type="hidden" th:field="*{imagemCard}">
+					<input type="hidden" th:field="*{imagemBanner}">
 					
 					<div class="row">
 						<div class="col-lg-4">
@@ -22,71 +40,134 @@
 						</div>
 
 						<div class="col-lg-4">
-							<label for="cadaDeShow">Casa de show</label>
-							<select th:field="*{casaDeShow}">
-							    <option th:each="casas: ${casasDeShow}" th:value="${casasDeShow.id}" th:text="${casasDeShow.nome}"></option>
-							</select>
+							<div th:class="${#fields.hasErrors('casaDeShow')}? error">
+								<label for="casaDeShow">Casa de show</label>
+								<select class="custom-select" th:field="*{casaDeShow}" id="casaDeShow">
+									<option value="" disabled selected>Selecione a casa de show</option>
+								    <option th:each="casa: ${casasDeShow}" th:value="${casa.id}" th:text="${casa.nome}"></option>
+								</select>
+							</div>
 						</div>
 
 						<div class="col-lg-2">
-							<label for="ingressos">Total de ingressos</label>		
-							<input class="form-control" id="ingressos" type="number" min="1" th:field="*{ingressosDisponiveis}">
+							<div th:class="${#fields.hasErrors('ingressosDisponiveis')}? error">
+								<label for="ingressos">Total de ingressos</label>		
+								<input class="form-control" id="ingressos" type="number" min="1" th:field="*{ingressosDisponiveis}">
+							</div>
 						</div>
 
 						<div class="col-lg-2">
-							<label for="limite">Ingressos por cliente</label>		
-							<input class="form-control" id="limite" type="number" min="1" th:field="*{limiteCliente}">
+							<div th:class="${#fields.hasErrors('limiteCliente')}? error">
+								<label for="limite">Ingressos por cliente</label>		
+								<input class="form-control" id="limite" type="number" min="1" th:field="*{limiteCliente}">
+							</div>
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="col-lg-8">
-							<label for="descricao">Descrição</label>
-							<textarea rows=4 class="form-control" id="descricao" th:field="*{descricao}"></textarea>
+							<div th:class="${#fields.hasErrors('descricao')}? error">
+								<label for="descricao">Descrição</label>
+								<textarea rows=4 class="form-control" id="descricao" th:field="*{descricao}"></textarea>
+							</div>
 						</div>
 
 						<div class="col-lg-4">
-							<label for="descricaoPequena">Descrição pequena</label>
-							<textarea rows=4 class="form-control" id="descricaoPequena" th:field="*{pequenaDescricao}"></textarea>
+   							
+							<div th:class="${#fields.hasErrors('pequenaDescricao')}? error">
+								<div class="row">
+									<label for="descricaoPequena" style="margin:0px 5px 5px 15px;">Descrição pequena</label>
+									<div id="charNum"></div>
+								</div>
+								<textarea rows=4 class="form-control" id="descricaoPequena" th:field="*{pequenaDescricao}" onkeyup="countChar(this)"></textarea>
+							</div>
 						</div>				
 					</div>
 
 					<div class="row">
 						<div class="col-lg-2">
-							<label for="preco">Preço do ingresso</label>
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text">R$</span>
+							<div th:class="${#fields.hasErrors('preco')}? error">
+								<label for="preco">Preço do ingresso</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">R$</span>
+									</div>
+									<input class="form-control" id="preco" type="text" th:field="*{preco}" onkeypress="$(this).mask('#.###,##', {reverse: true});" dir="rtl">
 								</div>
-								<input class="form-control" id="preco" type="text" th:field="*{preco}" onkeypress="$(this).mask('#.###,##', {reverse: true});" dir="rtl">
 							</div>
 						</div>
 
 						<div class="col-lg-3">
-							<label for="data">Data do evento</label>		
-							<input class="form-control" id="data" type="date" th:field="*{data}">
+							<div th:class="${#fields.hasErrors('data')}? error">
+								<label for="data">Data do evento</label>		
+								<input class="form-control" id="data" type="date" th:field="*{data}">
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<div th:class="${#fields.hasErrors('hora')}? error">
+								<label for="data">Hora do evento</label>		
+								<input class="form-control" id="hora" type="time" th:field="*{hora}">
+							</div>
 						</div>
 					</div>
 					
 					<br>
+					
+					<div th:if="${evento.id} != null">
+						<div class="row">
+							<div class="col-lg-6">
+								<p>Imagem do card atual</p>
+								<img th:src="@{'data:image/jpge;base64,'+${imagemCard64}}" width="286px" height="180px"/>
+							</div>
+							<div class="col-lg-6">
+								<p>Imagem do banner atual</p>
+								<img th:src="@{'data:image/jpge;base64,'+${imagemBanner64}}" width="375px" height="156px" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<p style="color: red;">Somente envie novas imagens caso queira trocar!</p>
+							</div>
+							
+						</div>
+					</div>
+					
 					<div class="row">
 						<div class="form-group col-lg-6">
-							<div th:class="${#fields.hasErrors('imagemCard')}? error">
-								<div class="custom-file">
-								    <input type="file" class="custom-file-input" id="imagemCard" accept=".jpg,.jpeg,.png">
-								    <label class="custom-file-label" for="customFile">Escolha uma foto para o card</label>
-								</div>
+							<div class="custom-file">
+							    <input type="file" class="custom-file-input" name="imagemC" id="imagemC" accept=".jpg,.jpeg,.png" th:value="${imagemCard}">
+							    <label class="custom-file-label" for="customFile">Foto para o card (tamanho: 384x384 px - 1mb)</label>
+							</div>
+						</div>
+						<div class="form-group col-lg-6">
+							<div class="custom-file">
+							    <input type="file" class="custom-file-input" name="imagemB" id="imagemB" accept=".jpg,.jpeg,.png">
+							    <label class="custom-file-label" for="customFile">Foto para o banner (tamanho: 1200x500 px - 1mb)</label>
+							</div>
+						</div>
+						
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div th:if="${alertaCard != null}" th:class="${alertaCard == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+										 role="alert" style="border-radius: 10px; padding:6px;">
+						  		<p th:text="${textoCard}" style="margin-bottom: 0px;">Há Campos inválidos</p>
+							</div>
+						</div>
+						<div class="form-group col-lg-6">
+							<div th:if="${alertaBanner != null}" th:class="${alertaBanner == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+										 role="alert" style="border-radius: 10px; padding:6px;">
+						  		<p th:text="${textoBanner}" style="margin-bottom: 0px;">Há Campos inválidos</p>
 							</div>
 						</div>
 					</div>
+					
 					<div class="row">
-						<div class="form-group col-lg-6">
-							<div th:class="${#fields.hasErrors('imagemBanner')}? error">
-								<div class="custom-file">
-								    <input type="file" class="custom-file-input" id="imagemBanner" accept=".jpg,.jpeg,.png">
-								    <label class="custom-file-label" for="customFile">Escolha uma foto para o banner</label>
-								</div>
-							</div>
+						<div class="col-lg-6 text-center">
+							<img id="previewCard" width="269px" height="269px"/>
+						</div>
+						<div class="col-lg-6 text-center">
+							<img id="previewBanner" width="375px" height="156px" />
 						</div>
 					</div>
 
@@ -97,7 +178,6 @@
 					</div>
 				</fieldset>
 			</form>
-
 		</div>
 		
 	</section>
@@ -105,13 +185,59 @@
 	<th:block layout:fragment="javascript-extra">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    	
+				
     	<script>
 			$(".custom-file-input").on("change", function() {
 			  var fileName = $(this).val().split("\\").pop();
 			  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+			}); 
+		</script>
+		
+		<script>
+		
+			function readURL(input) {
+			  if (input.files && input.files[0]) {
+			    var reader = new FileReader();
+			    reader.onload = function(e) {
+			      $('#previewCard').attr('src', e.target.result);
+			    }
+			    reader.readAsDataURL(input.files[0]);
+			    
+			  }
+			}
+
+			$("#imagemC").change(function() {
+			  readURL(this);
+			}); 
+		</script>
+		
+		<script>
+			function readURL2(input) {
+			  if (input.files && input.files[0]) {
+			    var reader = new FileReader();
+			    reader.onload = function(e) {
+			      $('#previewBanner').attr('src', e.target.result);
+			    }
+			    reader.readAsDataURL(input.files[0]);
+			    
+			  }
+			}
+
+			$("#imagemB").change(function() {
+			  readURL2(this);
 			});
 		</script>
+		<script>
+	      function countChar(val) {
+	        var len = val.value.length;
+	        if (len >= 100) {
+	          val.value = val.value.substring(0, 100);
+	        } else {
+	          $('#charNum').text(100 - len);
+	        }
+	      };
+   	 	</script>
+		
     </th:block>
 </body>
 </html>

@@ -1,13 +1,12 @@
-package com.leandro.webeventos.controller;
+package com.leandro.webeventos.controller.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.leandro.webeventos.model.Evento;
@@ -27,19 +26,20 @@ public class EventoController {
 	@GetMapping("/")
 	public String eventos(ModelMap model) {
 		List<Evento> eventos = service.buscarTodos();
-		byte[] encodeBase64;
-		String baseEncode64;
-		
 		for(Evento e : eventos) {
-			encodeBase64 = Base64.getEncoder().encode(e.getImagemCard());
-			try {
-				baseEncode64 = new String(encodeBase64, "UTF-8");
-				e.setImagemCard64(baseEncode64);
-			} catch (UnsupportedEncodingException e1) {
-				e1.printStackTrace();
-			}
+			e.transformaDados();
 		}
+		
+		
 		model.addAttribute("eventos", eventos);
 		return "eventos/eventos";
+	}
+
+	@GetMapping("{id}")
+	public String detalhes(@PathVariable("id") Long id, ModelMap model) {
+		Evento evento = service.buscarPorId(id);
+		evento.transformaDados();
+		model.addAttribute("evento", evento);
+		return "eventos/detalhes";
 	}
 }

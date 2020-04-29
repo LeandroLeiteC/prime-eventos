@@ -1,51 +1,53 @@
 package com.leandro.webeventos.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
+import com.leandro.webeventos.controller.dto.EventoDTO;
+import com.leandro.webeventos.controller.encoder.Encode64;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "evento")
+@Getter
+@Setter
 public class Evento extends EntidadeBase {
 
-	@NotBlank
 	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@NotBlank
-	@Column(name = "descricao", nullable = false)
+	@Column(name = "descricao", nullable = false, columnDefinition = "TEXT")
 	private String descricao;
 
-	@NotBlank
 	@Column(name = "pequena_descricao", nullable = false)
 	private String pequenaDescricao;
 
-	@NotBlank
-	@Column(name = "casa_de_show", nullable = false)
-	private String casaDeShow;
+	@ManyToOne
+	@JoinColumn(name = "casa_de_show")
+	private CasaShow casaDeShow;
 
-	@NotNull
 	@Column(name = "data", nullable = false)
-	private LocalDate data;
+	private Date data;
 
-	@NotNull
+	@Column(name = "hora", nullable = true)
+	private LocalTime hora;
+
 	@Column(name = "preco", nullable = false)
 	private double preco;
 
-	@NotNull
-	@Min(value = 1)
 	@Column(name = "ingressos_disponiveis", nullable = false)
 	private int ingressosDisponiveis;
 
-	@NotNull
-	@Min(value = 1)
 	@Column(name = "limite_ingressos_por_cliente", nullable = false)
 	private int limiteCliente;
 
@@ -58,6 +60,12 @@ public class Evento extends EntidadeBase {
 	@Transient
 	private String imagemCard64;
 
+	@Transient
+	private String imagemBanner64;
+
+	@Transient
+	private String dataString;
+
 	public Evento() {
 		super();
 	}
@@ -66,92 +74,77 @@ public class Evento extends EntidadeBase {
 		super.setId(id);
 	}
 
-	public String getNome() {
-		return nome;
+	public void transformaDados() {
+		String[] dt = this.data.toString().split("-");
+		String dtConcat = dt[2] + "/" + dt[1] + "/" + dt[0];
+		this.dataString = dtConcat;
+		imagemCard64 = Encode64.encode64(imagemCard);
+		imagemBanner64 = Encode64.encode64(imagemBanner);
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public EventoDTO transforma() {
+		EventoDTO eventoDTO = new EventoDTO();
+		eventoDTO.setCasaDeShow(casaDeShow.getId());
+		eventoDTO.setData(data);
+		eventoDTO.setHora(hora);
+		eventoDTO.setDescricao(descricao);
+		eventoDTO.setId(getId());
+		eventoDTO.setIngressosDisponiveis(ingressosDisponiveis);
+		eventoDTO.setLimiteCliente(limiteCliente);
+		eventoDTO.setNome(nome);
+		eventoDTO.setPequenaDescricao(pequenaDescricao);
+		eventoDTO.setPreco(String.valueOf(preco).replace(".", ","));
+		eventoDTO.setImagemCard(imagemCard);
+		eventoDTO.setImagemBanner(imagemBanner);
+		return eventoDTO;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((hora == null) ? 0 : hora.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(preco);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getCasaDeShow() {
-		return casaDeShow;
-	}
-
-	public void setCasaDeShow(String casaDeShow) {
-		this.casaDeShow = casaDeShow;
-	}
-
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
-
-	public int getIngressosDisponiveis() {
-		return ingressosDisponiveis;
-	}
-
-	public void setIngressosDisponiveis(int ingressosDisponiveis) {
-		this.ingressosDisponiveis = ingressosDisponiveis;
-	}
-
-	public String getPequenaDescricao() {
-		return pequenaDescricao;
-	}
-
-	public void setPequenaDescricao(String pequenaDescricao) {
-		this.pequenaDescricao = pequenaDescricao;
-	}
-
-	public int getLimiteCliente() {
-		return limiteCliente;
-	}
-
-	public void setLimiteCliente(int limiteCliente) {
-		this.limiteCliente = limiteCliente;
-	}
-
-	public byte[] getImagemCard() {
-		return imagemCard;
-	}
-
-	public void setImagemCard(byte[] imagemCard) {
-		this.imagemCard = imagemCard;
-	}
-
-	public String getImagemCard64() {
-		return imagemCard64;
-	}
-
-	public void setImagemCard64(String imagemCard64) {
-		this.imagemCard64 = imagemCard64;
-	}
-
-	public byte[] getImagemBanner() {
-		return imagemBanner;
-	}
-
-	public void setImagemBanner(byte[] imagemBanner) {
-		this.imagemBanner = imagemBanner;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Evento other = (Evento) obj;
+		if (data == null) {
+			if (other.data != null)
+				return false;
+		} else if (!data.equals(other.data))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (hora == null) {
+			if (other.hora != null)
+				return false;
+		} else if (!hora.equals(other.hora))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (Double.doubleToLongBits(preco) != Double.doubleToLongBits(other.preco))
+			return false;
+		return true;
 	}
 
 }

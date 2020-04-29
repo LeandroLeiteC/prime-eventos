@@ -1,12 +1,20 @@
 package com.leandro.webeventos.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "casa_de_show")
+@Getter
+@Setter
 public class CasaShow extends EntidadeBase {
 
 	@Column(name = "nome", nullable = false)
@@ -36,76 +44,15 @@ public class CasaShow extends EntidadeBase {
 	@Column(name = "telefone", nullable = false)
 	private String telefone;
 
-	public String getNome() {
-		return nome;
+	@OneToMany(mappedBy = "casaDeShow")
+	private List<Evento> eventos;
+	
+	public CasaShow() {
+		super();
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getRua() {
-		return rua;
-	}
-
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
-	public int getLimitePessoas() {
-		return limitePessoas;
-	}
-
-	public void setLimitePessoas(int limitePessoas) {
-		this.limitePessoas = limitePessoas;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
+	public CasaShow(Long id) {
+		super.setId(id);
 	}
 
 	@Override

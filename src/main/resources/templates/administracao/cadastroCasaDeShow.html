@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="index">
+<head>
+<title>Admin - Casa de Show</title>
+
+</head>
+<body>
+	<section layout:fragment="conteudo">
+		<div class="container" style="margin-top: 80px;">
+			<div class="col-lg-3 col-md-2 col-sm-1 col-2 align-self-center">
+				<a th:href="@{/}" id="voltar" style="font-size: 20px;">
+					<i class="fas fa-arrow-left"></i>
+					Home
+				</a>
+			</div>
+			<form class="form-group" method="POST" th:action="@{cadastrar-casa-de-show}" th:object="${casaShow}">
+				<fieldset>
+					<legend>Cadastro de Casa de show</legend>
+					
+					<div th:if="${alertaCasa != null}" th:class="${alertaCasa == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+						 role="alert">
+					  <h4 th:text="${titulo}" class="alert-heading">Cadastro não permitido</h4>
+					  <p th:text="${texto}">Há campos inválidos</p>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-6">
+							<div th:class="${#fields.hasErrors('nome')}? error">
+								<label for="nome">Nome da casa</label>
+								<input class="form-control" id="nome" type="text" th:field="*{nome}">
+							</div>
+						</div>
+						
+						<div class="col-lg-2">
+							<div th:class="${#fields.hasErrors('limitePessoas')}? error">
+								<label for="nome">Limite de pessoas</label>
+								<input class="form-control" id="limite" type="number" min="0" th:field="*{limitePessoas}">
+							</div>
+						</div>
+						
+						<div class="col-lg-3">
+							<div th:class="${#fields.hasErrors('telefone')}? error">
+								<label for="nome">Telefone</label>
+								<input class="form-control" id="telefone" minlength="14" maxlength="14" type="text" th:field="*{telefone}" placeholder="(##) #####-####" onkeypress="$(this).mask('(00) 00000-0000')">
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-2">
+					        <div th:class="${#fields.hasErrors('cep')}? error">
+						        <label for="cep">Cep:</label>
+						        <input class="form-control" name="cep" type="text" id="cep" maxlength="10" onkeypress="$(this).mask('00.000-000')" th:field="*{cep}" />
+				       		</div>
+				        </div>
+				        
+					 	<div class="col-lg-4">
+					      	<div th:class="${#fields.hasErrors('cidade')}? error">
+						        <label for="cidade">Cidade:</label>
+						        <input class="form-control" name="cidade" type="text" id="cidade" size="40" th:field="*{cidade}"/>
+					   		</div>
+					    </div>
+					    
+					    <div class="col-lg-4">
+					    	<div th:class="${#fields.hasErrors('bairro')}? error">
+						        <label for="bairro">Bairro:</label>
+						        <input class="form-control" name="bairro" type="text" id="bairro" size="40" th:field="*{bairro}" />
+					   		</div>
+					    </div> 
+					    
+					    <div class="col-lg-1">
+					       	<div th:class="${#fields.hasErrors('uf')}? error">
+						        <label for="uf">Estado:</label>
+						        <input class="form-control" name="uf" type="text" id="uf" size="2" th:field="*{uf}"/>
+							</div>
+						</div>
+					    
+					</div>
+					
+					<div class="row">
+						
+				        <div class="col-lg-4">
+					        <div th:class="${#fields.hasErrors('rua')}? error">
+						        <label for="rua">Rua:</label>
+						        <input class="form-control" name="rua" type="text" id="rua" size="60" th:field="*{rua}"/>
+				       		</div>
+				       	</div>
+				       	
+				       	<div class="col-lg-2">
+				       		<div th:class="${#fields.hasErrors('numero')}? error">
+					       		<label for="numero">Número:</label>
+					       		<input class="form-control" name="numero" id="numero" type="number" th:field="*{numero}"/>
+				       		</div>
+				       	</div>
+						
+					 </div>
+					 
+					<div class="row" style="margin-top: 10px;">
+						<div class="col-lg-4">
+							<button type="submit" class="btn btn-primary">Cadastrar</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+			<div class="row">
+				<div class="col-lg-12">
+					<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+									 role="alert" style="border-radius: 10px;">
+					 	<p th:text="${texto}" style="margin-bottom: 0px;"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<th:block layout:fragment="javascript-extra">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+     	<script type="text/javascript" >
+	        $(document).ready(function() {
+	
+	            function limpa_formulário_cep() {
+	                // Limpa valores do formulário de cep.
+	                $("#rua").val("");
+	                $("#bairro").val("");
+	                $("#cidade").val("");
+	                $("#uf").val("");
+	            }
+	            
+	            //Quando o campo cep perde o foco.
+	            $("#cep").blur(function() {
+	
+	                //Nova variável "cep" somente com dígitos.
+	                var cep = $(this).val().replace(/\D/g, '');
+	
+	                //Verifica se campo cep possui valor informado.
+	                if (cep != "") {
+	
+	                    //Expressão regular para validar o CEP.
+	                    var validacep = /^[0-9]{8}$/;
+	
+	                    //Valida o formato do CEP.
+	                    if(validacep.test(cep)) {
+	
+	                        //Preenche os campos com "..." enquanto consulta webservice.
+	                        $("#rua").val("...");
+	                        $("#bairro").val("...");
+	                        $("#cidade").val("...");
+	                        $("#uf").val("...");
+	
+	                        //Consulta o webservice viacep.com.br/
+	                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+	
+	                            if (!("erro" in dados)) {
+	                                //Atualiza os campos com os valores da consulta.
+	                                $("#rua").val(dados.logradouro);
+	                                $("#bairro").val(dados.bairro);
+	                                $("#cidade").val(dados.localidade);
+	                                $("#uf").val(dados.uf);
+	                            } //end if.
+	                            else {
+	                                //CEP pesquisado não foi encontrado.
+	                                limpa_formulário_cep();
+	                                alert("CEP não encontrado.");
+	                            }
+	                        });
+	                    } //end if.
+	                    else {
+	                        //cep é inválido.
+	                        limpa_formulário_cep();
+	                        alert("Formato de CEP inválido.");
+	                    }
+	                } //end if.
+	                else {
+	                    //cep sem valor, limpa formulário.
+	                    limpa_formulário_cep();
+	                }
+	            });
+	        });
+	    </script>
+	</th:block>
+
+</body>
+</html>

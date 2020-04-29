@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="index">
+<head>
+<title>Prime Eventos - Eventos</title>
+</head>
+<body>
+
+	<section layout:fragment="conteudo">
+		<div id="eventos" style="margin-top: 80px;">
+			<div class="container" style="background: #fff;padding-top: 15px; min-height: 1100px;">
+				
+				<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+										 role="alert" style="border-radius: 10px;">
+	  				<p th:text="${texto}" style="margin-bottom: 0px;">Há Campos inválidos</p>
+				</div>
+				
+				<div id="imgBanner">
+					<img th:src="@{'data:image/jpge;base64,'+${evento.imagemBanner64}}">
+				</div>
+				
+				<div class="row" style="margin:0;" >
+					<div class="col-lg-8">
+						<div id="conteudoEvento" style="margin-top: 35px;">
+							<div class="row">
+								<div class="col-lg-3 col-md-2 col-sm-3 col-3 align-self-center">
+									<a th:href="@{/eventos/}" id="voltar" style="font-size: 110%">
+										<i class="fas fa-arrow-left"></i>
+										Eventos
+									</a>
+								</div>
+								<div class="col-lg-7 col-md-8 col-sm-7 col-6">
+									<h1 class="text-center" th:text="${evento.nome}"></h1>
+								</div>
+								
+							</div>
+							
+							<p class="text-justify" th:text="${evento.descricao}"></p>				
+						</div>
+					</div>
+					
+					<div class="col-lg-4" style="margin-top: 40px;">
+						<div style="background: #fff; border: 1px solid #D9D9D9;">
+							<div id="cardEvento" class="text-center" style="margin-top: 15px;" >
+								<img th:src="@{'data:image/jpge;base64,'+${evento.imagemCard64}}" width="286px;"
+									style="border: 1px solid black;margin-top: 10px">
+							</div>
+							
+							<div style="margin-left: 30px; margin-top: 10px;">
+								<h2 th:text="'R$ ' + ${#numbers.formatDecimal(evento.preco, 0, 'POINT', 2, 'COMMA')}"></h2>
+							</div>
+							
+							<div class="text-center" style="margin: 10px;">
+								<a th:href="@{/carrinho/adicionar/{id}(id = ${evento.id})}" class="btn btn-danger btn-lg w-75 mb-2"
+									th:classappend="${#authorization.expression('isAuthenticated()')} ? 
+	               					'' : 'disabled'">Adicionar ao carrinho</a>
+	               				<div sec:authorize="!isAuthenticated()">
+	               					<p style="color: red">Para comprar precisa estar logado</p>
+	               				</div>
+							</div>
+							
+							<div id="endereco" style="margin:10px 20px;" >
+								<h5 th:text="${evento.casaDeShow.nome}"></h5>
+								<h6>Endereço:</h6>
+								<p class="mb-1" th:text="${evento.casaDeShow.rua} + ', ' + ${evento.casaDeShow.numero} + ' -	' + ${evento.casaDeShow.bairro}"></p>
+								<p th:text="${evento.casaDeShow.cidade} + '-' + ${evento.casaDeShow.uf} + ', ' + ${evento.casaDeShow.cep}"></p>
+								<p th:text="'Telefone da Casa: ' + ${evento.casaDeShow.telefone}"></p>
+								<p class="font-weight-bold" th:text="'Data: ' + ${#dates.format(evento.data, 'dd/MM/yyyy')} + ' às ' + ${evento.hora} + 'h'"></p>
+							</div>
+								
+						</div>
+					</div>
+					
+					
+				</div >
+				<hr>
+			
+			</div>
+		</div>
+	</section>
+	
+</body>
+</html>

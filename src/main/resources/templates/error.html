@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"
+		layout:decorator="index">
+
+<head>
+	<title>Prime Eventos - Página não encontrada</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/vendors/bootstrap.min.css}">
+	<link rel="shortcut icon" th:href="@{/img/favicon.png}"/>
+	<script src="https://kit.fontawesome.com/cbc2003b8f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<section layout:fragment="conteudo">
+		<div class="container text-center" style="margin-top: 100px;">
+				<i class="far fa-file-excel" style="font-size: 100px;"></i>
+				<h1>Página não encontrada!</h1>
+				<a th:href="@{/}">Voltar</a>
+		</div>
+	</section>
+	
+</body>
+</html>

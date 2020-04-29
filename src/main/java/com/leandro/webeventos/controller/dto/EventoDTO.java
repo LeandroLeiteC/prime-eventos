@@ -1,32 +1,39 @@
 package com.leandro.webeventos.controller.dto;
 
-import java.time.LocalDate;
+import java.sql.Date;
+import java.time.LocalTime;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import com.leandro.webeventos.model.CasaShow;
 import com.leandro.webeventos.model.Evento;
 
 public class EventoDTO {
+
+	private Long id;
 
 	@NotBlank
 	private String nome;
 
 	@NotBlank
+	@Size(min = 5)
 	private String descricao;
 
 	@NotBlank
+	@Size(min = 5, max = 100)
 	private String pequenaDescricao;
 
-	@NotBlank
-	private String casaDeShow;
-
-	@NotBlank
-	private String data;
+	@NotNull
+	private Long casaDeShow;
 
 	@NotNull
-	private double preco;
+	private Date data;
+
+	@NotBlank
+	private String preco;
 
 	@NotNull
 	@Min(value = 1)
@@ -37,24 +44,24 @@ public class EventoDTO {
 	private int limiteCliente;
 
 	@NotNull
+	private LocalTime hora;
+
 	private byte[] imagemCard;
 
-	@NotNull
 	private byte[] imagemBanner;
 
-	private LocalDate transformaData() {
-		String[] dataEvento = data.split("-");
-		int dia = Integer.parseInt(dataEvento[2]);
-		int mes = Integer.parseInt(dataEvento[1]);
-		int ano = Integer.parseInt(dataEvento[0]);
-		LocalDate dtEvento = LocalDate.of(ano, mes, dia);
-		return dtEvento;
-	}
+	private CasaShow casaShow;
 
 	public Evento transforma() {
 		Evento evento = new Evento();
-		evento.setCasaDeShow(casaDeShow);
-		evento.setData(transformaData());
+
+		if (id != null) {
+			evento.setId(id);
+		}
+		
+		evento.setHora(hora);
+		evento.setCasaDeShow(casaShow);
+		evento.setData(data);
 		evento.setDescricao(descricao);
 		evento.setImagemCard(imagemCard);
 		evento.setImagemBanner(imagemBanner);
@@ -62,7 +69,8 @@ public class EventoDTO {
 		evento.setLimiteCliente(limiteCliente);
 		evento.setNome(nome);
 		evento.setPequenaDescricao(pequenaDescricao);
-		evento.setPreco(preco);
+		double p = Double.parseDouble(preco.replace(",", "."));
+		evento.setPreco(p);
 		return evento;
 	}
 
@@ -90,27 +98,27 @@ public class EventoDTO {
 		this.pequenaDescricao = pequenaDescricao;
 	}
 
-	public String getCasaDeShow() {
+	public Long getCasaDeShow() {
 		return casaDeShow;
 	}
 
-	public void setCasaDeShow(String casaDeShow) {
+	public void setCasaDeShow(Long casaDeShow) {
 		this.casaDeShow = casaDeShow;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 
-	public double getPreco() {
+	public String getPreco() {
 		return preco;
 	}
 
-	public void setPreco(double preco) {
+	public void setPreco(String preco) {
 		this.preco = preco;
 	}
 
@@ -142,8 +150,32 @@ public class EventoDTO {
 		return imagemBanner;
 	}
 
-	public void setImagemBanner(byte[] imagemBanner) {
-		this.imagemBanner = imagemBanner;
+	public void setImagemBanner(byte[] imagembanner) {
+		this.imagemBanner = imagembanner;
+	}
+
+	public CasaShow getCasaShow() {
+		return casaShow;
+	}
+
+	public void setCasaShow(CasaShow casaShow) {
+		this.casaShow = casaShow;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalTime getHora() {
+		return hora;
+	}
+
+	public void setHora(LocalTime hora) {
+		this.hora = hora;
 	}
 
 }

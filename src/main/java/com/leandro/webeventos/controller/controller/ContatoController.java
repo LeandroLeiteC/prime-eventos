@@ -1,4 +1,4 @@
-package com.leandro.webeventos.controller;
+package com.leandro.webeventos.controller.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

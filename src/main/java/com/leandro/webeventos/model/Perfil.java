@@ -4,10 +4,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "perfil")
+@Getter
+@Setter
 public class Perfil extends EntidadeBase {
 
 	@Column(name = "descricao", nullable = false, unique = true)
@@ -19,14 +24,6 @@ public class Perfil extends EntidadeBase {
 
 	public Perfil(Long id) {
 		super.setId(id);
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 }

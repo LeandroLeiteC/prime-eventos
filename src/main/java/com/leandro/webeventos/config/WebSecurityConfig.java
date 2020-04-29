@@ -24,31 +24,24 @@ private UsuarioService service;
 		http
 			.authorizeRequests()
 				.antMatchers("/css/**", "/js/**", "/img/**").permitAll()
-				.antMatchers("/").permitAll()
-				.antMatchers("/cadastro").permitAll()
-				.antMatchers("/cadastrarCliente").permitAll()
+				.antMatchers("/", "/eventos/**", "/novo-cadastro").permitAll()
+				.antMatchers("/cadastro", "/cadastrarCliente").permitAll()
 				
-				.antMatchers("/empresas/**").hasAuthority("ADMIN")
-				.antMatchers("/eventos/**").permitAll()
+				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				
 				.anyRequest().authenticated()
 			.and()
-			.formLogin()
+				.formLogin()
 				.loginPage("/login")
+				.loginProcessingUrl("/process-login").permitAll()
 				.defaultSuccessUrl("/", true)
-				.failureUrl("/login-error")
-				.permitAll()
 			.and()
 				.logout()
-				.logoutSuccessUrl("/")
-			.and()
-				.exceptionHandling()
-				.accessDeniedPage("/acesso-negado");
+				.logoutSuccessUrl("/");
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(service).passwordEncoder(new BCryptPasswordEncoder());
-	}
-
+	}	
 }

@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="index">
 <head>
-<title>Prime Eventos - Empresas</title>
+<title>Prime Eventos - Admin</title>
 </head>
 <body>
 	<section layout:fragment="conteudo">
@@ -16,17 +16,19 @@
 					  <p th:text="${texto}" style="margin-bottom: 0px;">Há Campos inválidos</p>
 					</div>
 					<div id="form-cliente" >
-						<h3>Cadastro de Cliente</h3>
-				   		<form class="form-group" method="POST" th:action="@{/cadastro}"
+						<h3>Cadastro de Administrador</h3>
+				   		<form class="form-group" method="POST" th:action="@{/admin/cadastro/novo-admin}"
 				   			th:object="${clienteDTO}">
 
 							<div class="row">
+
 								<div class="col-lg-12">
 									<div th:class="${#fields.hasErrors('nome')}? error">
 										<label for="nome">Nome Completo</label>
 										<input class="form-control" id="nome" type="text" th:field="*{nome}" >
 									</div>
 								</div>
+
 							</div>
 
 							<div class="row">
@@ -39,7 +41,7 @@
 								</div>
 						
 							</div>
-<!--  
+
 							<div class="row">
 								<div class="col-lg-6">
 									<div th:class="${#fields.hasErrors('nascimento')}? error">
@@ -49,7 +51,7 @@
 								</div>
 
 							</div>
--->
+
 							<div class="row">
 								<div class="col-lg-6">
 									<div th:class="${#fields.hasErrors('usuario.password')}? error">

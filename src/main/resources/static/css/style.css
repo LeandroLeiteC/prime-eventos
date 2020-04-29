@@ -119,6 +119,22 @@ ul li.nav-item {
 	margin: 0 auto;
 }
 
+.card label{
+	position: absolute;
+	background-color: #FFE4AC ;
+	padding: 5px 10px;
+	top:166px;
+	color: black;
+}
+.card .date{
+	font-size:15px;
+	font-family: Impact, fantasy;
+	top:15px;
+	border-radius: 50%;
+	width:55px;
+	right:20px;
+}
+
 /* Cadastro */
 #form-cliente {
 	border: 5px solid #3867d6;
@@ -132,8 +148,12 @@ ul li.nav-item {
 	width: 80%;
 }
 
-.error input{
+.error input, .error textarea{
 	border: 1px solid red;
+}
+
+a#voltar:hover {
+	text-decoration: none;
 }
 
 
@@ -142,21 +162,9 @@ ul li.nav-item {
 /********************/
 
 
-/* #footer {
-	background: #3867d6;
-	text-align: center;
-	padding-top: 5px;
- 	position: absolute;
- 	bottom: 0;
- 	width: 100%;
-  	height: 2.5rem;
-}
-*/
-
 #page-container {
-  border: 0.5px solid blue;
   position: relative;
-  min-height: 100vh;
+  min-height: 50vh;
 }
 
 
@@ -167,7 +175,7 @@ ul li.nav-item {
 }
 
 /********************/
-/*     Empresas     */
+/*     Cadastros    */
 /********************/
 
 #evento-form label {
@@ -178,4 +186,52 @@ ul li.nav-item {
 
 input.form-control {
 	height: 2.5em !important;	
+}
+
+/********************/
+/*     Detalhes     */
+/********************/
+
+#imgBanner img{
+	width: 100%;
+	max-width: 1200px;
+	max-height: 500px;
+	margin:0 auto;
+	border: 4px double black;
+}
+
+#endereco p{
+	margin: 0;
+	padding: 0;
+}
+
+
+/********************/
+/*     Links        */
+/********************/
+
+a {
+  color: #92badd;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #56baed;
+  content: "";
+  transition: width 0.2s;
+}
+
+.underlineHover:hover {
+  color: #0d0d0d;
+}
+
+.underlineHover:hover:after{
+  width: 100%;
 }

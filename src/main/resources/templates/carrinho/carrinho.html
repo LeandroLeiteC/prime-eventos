@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="index">
+<head>
+<title>Prime Eventos - Carrinho</title>
+
+</head>
+<body>
+
+	<section layout:fragment="conteudo">
+		<div id="carrinho" style="margin-top: 80px;">
+			<div class="container" th:styleappend="${#lists.size(compraEventos) > 0} ? 'background: #fff;' : 'background: none;'" style="background: #fff;padding-top: 15px;">
+				<div th:if="${#lists.size(compraEventos) > 0}">
+					<div class="col-12">
+						<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+												 role="alert" style="border-radius: 10px;">
+							 <p th:text="${texto}" style="margin-bottom: 0px;"></p>
+						</div>
+			            <div class="table-responsive">
+			            	<h1>Carrinho</h1>
+			            	
+			                <table class="table table-striped">
+			                    <thead>
+			                        <tr class="text-center">
+			                            <th scope="col"> </th>
+			                            <th scope="col">Evento</th>
+			                            <th scope="col">Ingressos disponíveis</th>
+			                            <th scope="col" class="text-center">Quantidade</th>
+			                            <th scope="col" class="text-right">Subtotal</th>
+			                            <th> </th>
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                    	<tr th:each="compraEvento: ${compraEventos}" class="text-center" style="font-size: 1.1em; line-height: 2em;">
+			                            <td><img th:src="@{'data:image/jpge;base64,' + ${compraEvento.evento.imagemCard64}}" width="70px;"/></td>
+			                            <td th:text="${compraEvento.evento.nome}">Nome do Evento</td>
+			                            <td th:text="${compraEvento.evento.ingressosDisponiveis}"></i></td>
+			                            <td>
+			                            	<span th:text="${compraEvento.qtdIngresso}"></span>
+			                            	<a th:href="@{/carrinho/adicionarUm/{id}(id = ${compraEvento.evento.id})}" style="color: green;"><i class="fas fa-plus-square" style="font-size: 20px;"></i></a>
+			                            	<a th:href="@{/carrinho/removerUm/{id}(id = ${compraEvento.evento.id})}" style="color: red;"><i class="fas fa-minus-square" style="font-size: 20px;"></i></a>
+			                            		
+			                            </td>
+			                            <td class="text-right" th:text="'R$ ' + ${#numbers.formatDecimal(compraEvento.subtotal, 0, 'POINT', 2, 'COMMA')}"></td>
+			                            <td class="text-right"><a th:href="@{/carrinho/remover/{id} (id=${compraEvento.evento.id})}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </a> </td>
+			                        </tr>
+			                        <tr>
+			                            <td></td>
+			                            <td></td>
+			                            <td></td>
+			                            <td></td>
+			                            <td><strong>Total</strong></td>
+			                            <td class="text-right"><strong th:text="'R$ ' + ${#numbers.formatDecimal(total, 0, 'POINT', 2, 'COMMA')}"></strong></td>
+			                        </tr>
+			                    </tbody>
+			                </table>
+			            </div>
+			        </div>
+			        <div class="col mb-2" style="margin: 20px 0; padding-bottom: 20px;">
+			            <div class="row">
+			                <div class="col-sm-12  col-md-6">
+			                    <a th:href="@{/eventos/}" class="btn btn-primary btn-block ">Continuar comprando</a>
+			                </div>
+			                <div class="col-sm-12 col-md-6 text-right">
+			                    <a th:href="@{/carrinho/finalizar}" class="btn btn-block btn-success text-white">Finalizar compra</a>
+			                </div>
+			            </div>
+			        </div>
+				</div>
+			
+				
+				<div th:unless="${#lists.size(compraEventos) > 0}">
+					<div class="text-center">
+						<h2>Seu carrinho está vazio</h2>
+						<h4>Que tal dar uma olhada nos nossos eventos?</h4>
+						<a th:href="@{/eventos/}">Clique aqui e confira!</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

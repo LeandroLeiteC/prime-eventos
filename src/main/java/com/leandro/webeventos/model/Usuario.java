@@ -13,9 +13,14 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "usuario", indexes = { @Index(name = "idx_usuario_email", columnList = "email") })
+@Getter
+@Setter
 public class Usuario extends EntidadeBase {
 
 	@Column(name = "email", unique = true, nullable = false)
@@ -49,41 +54,9 @@ public class Usuario extends EntidadeBase {
 		this.perfis.add(new Perfil(tipo.getCod()));
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public List<Perfil> getPerfis() {
-		return perfis;
-	}
-
-	public void setPerfis(List<Perfil> perfis) {
-		this.perfis = perfis;
-	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-
 	@Override
 	public String toString() {
-		return "Usuario [email=" + email + ", password=" + password + ", perfis=" + perfis + ", ativo=" + ativo + "]";
+		return "Usuario [ativo=" + ativo + ", email=" + email + ", perfis=" + perfis + "]";
 	}
 
 }

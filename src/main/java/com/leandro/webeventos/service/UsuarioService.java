@@ -1,6 +1,7 @@
 package com.leandro.webeventos.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -26,17 +27,22 @@ public class UsuarioService implements UserDetailsService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Usuario buscarPorEmail(String email) {
+	public Optional<Usuario> buscarPorEmail(String email) {
 		return repository.findByEmail(email);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = buscarPorEmail(username);
-		return new User(usuario.getEmail(),
-						usuario.getPassword(),
-						AuthorityUtils.createAuthorityList(getAuthorities(usuario.getPerfis())));
+		Optional<Usuario> usuario = buscarPorEmail(username);
+		if(usuario.isPresent()) {
+			Usuario user = usuario.get();
+			return new User(user.getEmail(),
+					user.getPassword(),
+					AuthorityUtils.createAuthorityList(getAuthorities(user.getPerfis())));
+		}
+		throw new UsernameNotFoundException("Usuario não encontrado");
+		
 	}
 	
 	private String[] getAuthorities(List<Perfil> perfis) {
