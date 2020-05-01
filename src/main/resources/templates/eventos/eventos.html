@@ -33,15 +33,19 @@
 						<div class="col-md-4 col-sm-6 col-xs-12" th:each="evento: ${eventos}">
 							<article class="material-card Red">
 								<h2>
-									<a class="text-white underlineHover" th:href="@{/eventos/{id}(id = ${evento.id})}" th:text="${evento.nome}">Nome do evento</a> <strong> 
-									<i class="fas fa-map-marker-alt"></i>
-									<i th:text="${evento.casaDeShow.cidade} + '-' + ${evento.casaDeShow.uf}"></i>
+									<div class="row">
+										<a class="text-white underlineHover ml-3" th:href="@{/eventos/{id}(id = ${evento.id})}" th:text="${evento.nome}">Nome do evento</a> 
+										<span class="ml-3" style="font-size: 20px;padding-top:2px;" sec:authorize="hasAuthority('ADMIN')" th:if="${evento.ingressosDisponiveis > 0}"><i class="fas fa-check-circle"></i></span>
+										<span class="ml-3" style="font-size: 20px;padding-top:2px;" sec:authorize="hasAuthority('ADMIN')" th:if="${evento.ingressosDisponiveis == 0}"><i class="fas fa-times-circle"></i></span>
+									</div>
+									<strong> 
+										<i class="fas fa-map-marker-alt"></i>
+										<i th:text="${evento.casaDeShow.cidade} + '-' + ${evento.casaDeShow.uf}"></i>
 									</strong>
 								</h2>
 								<div class="mc-content">
 									<div class="img-container">
-										<img class="img-responsive"
-											th:src="@{'data:image/jpge;base64,'+${evento.imagemCard64}}">
+										<img class="img-responsive" th:src="@{'data:image/jpge;base64,'+${evento.imagemCard64}}">
 									</div>
 									<div class="mc-description" th:text="${evento.pequenaDescricao}">Pequena descrição</div>
 								</div>

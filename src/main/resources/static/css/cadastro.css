@@ -28,6 +28,25 @@ h2 {
   color: #cccccc;
 }
 
+h6 {
+	text-align: center;
+  	font-size: 16px;
+  	font-weight: 600;
+  	text-transform: uppercase;
+  	display:inline-block;
+  	margin: 40px 8px 10px 8px; 
+  	color: #949494;
+}
+p {
+	font-size: 13px;
+	text-align: center;
+  	font-weight: 600;
+  	text-transform: uppercase;
+  	display:inline-block;
+  	margin: 40px 8px 10px 8px; 
+  	color: #949494;
+}
+
 
 
 /* STRUCTURE */
@@ -261,6 +280,6 @@ input[type=text]:placeholder, input[type=password]:placeholder, input[type=date]
   	width:40%;
 }
 
-.error input{
-	border: 1px solid red;
+input.error{
+	border: 1px solid red !important;
 }

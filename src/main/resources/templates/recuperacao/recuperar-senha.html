@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+	<title>Prime Eventos - Nova Senha</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/cadastro.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/vendors/bootstrap.min.css}">
+	<link rel="shortcut icon" th:href="@{/img/favicon.png}"/>
+	<script src="https://kit.fontawesome.com/cbc2003b8f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<div class="wrapper fadeInDown">
+  		<div id="formContent">
+   	 	<!-- Tabs Titles -->
+
+    	<!-- Icon -->
+    	<div class="fadeIn first">
+      		<img th:src="@{/img/PrimeLogo.png}" id="icon" alt="User Icon"/>
+    	</div>
+    	
+    	<h6 class="text-center">Receber um código de verificação</h6>
+    	<p>O Prime Eventos irá te enviar um código de verificação</p>
+
+	    <!-- Login Form -->
+	    <form method="GET" th:action="@{/redefinir/senha}">
+	    	<p th:if="${alerta != null}" style="color: red;"  th:text="${alerta}"></p>
+	      	<input type="email" class="fadeIn second" th:classappend="${alerta != null} ? 'error': '' "  placeholder="E-mail" name="email">
+		    <input type="submit" class="fadeIn fourth" value="Enviar">
+	    </form>
+
+	    <div id="formFooter" style="padding: 20px;">
+	    	<div class="row justify-content-around">
+	    		<div class="col-4">
+		    		<a class="underlineHover" th:href="@{/}"><i class="fas fa-home"></i>&nbsp Home</a>
+		      	</div>
+		      	
+		      	<div class="col-6">
+		      		Já tem uma conta? <a th:href="@{/login}" class="underlineHover">Login</a>
+		      	</div>
+		    </div>
+	    </div>
+
+  	</div>
+  	
+</div>
+</body>
+</html>

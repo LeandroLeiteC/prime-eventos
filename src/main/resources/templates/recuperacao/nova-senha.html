@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+	<title>Prime Eventos - Cadastro</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/cadastro.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/vendors/bootstrap.min.css}">
+	<link rel="shortcut icon" th:href="@{/img/favicon.png}"/>
+	<script src="https://kit.fontawesome.com/cbc2003b8f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<div class="wrapper fadeInDown">
+  		<div id="formContent">
+   	 	<!-- Tabs Titles -->
+
+    	<!-- Icon -->
+    	<div class="fadeIn first">
+      		<img th:src="@{/img/PrimeLogo.png}" id="icon" alt="User Icon"/>
+    	</div>
+
+	    <!-- Login Form -->
+	    <form method="POST" th:action="@{/redefinir/senha/finalizar}" th:object="${usuarioDTO}">
+      		<input type="hidden" th:field="*{email}">
+	     	<div th:class="${#fields.hasErrors('password')}? error">
+		      	<input type="password" class="fadeIn third" placeholder="Nova senha" th:field="*{password}">
+	      	</div>
+	     	<div th:class="${#fields.hasErrors('confirmPassword')}? error"> 
+		      	<input type="password" class="fadeIn third" placeholder="Confirme sua nova senha" th:field="*{confirmPassword}">
+	      	</div>
+		      <input type="submit" class="fadeIn fourth" value="Trocar senha">
+	    </form>
+
+	    <div id="formFooter" style="padding: 20px;">
+	    	<div class="row justify-content-around">
+	    		<div class="col-4">
+		    		<a class="underlineHover" th:href="@{/}"><i class="fas fa-home"></i>&nbsp Home</a>
+		      	</div>
+		      	
+		      	<div class="col-6">
+		      		Já tem uma conta? <a th:href="@{/login}" class="underlineHover">Login</a>
+		      	</div>
+		    </div>
+	    </div>
+
+  	</div>
+  	
+</div>
+</body>
+</html>

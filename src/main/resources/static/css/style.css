@@ -79,17 +79,19 @@ div #login-form {
     	background: none;
     }
     
-    #forgot-pass {
+    #forgot-pass, #cadastre {
     	color: white;
     }
-    #forgot-pass:hover {
+    #forgot-pass:hover, #cadastre:hover {
     	color: white;
     }
+    
+    ul li.nav-item {
+		margin-left: 30px;
+	}
 }
 
-ul li.nav-item {
-	margin-left: 50px;
-}
+
 
 
 

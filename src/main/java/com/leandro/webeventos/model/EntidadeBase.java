@@ -18,7 +18,7 @@ public abstract class EntidadeBase implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	public EntidadeBase() {
 	}

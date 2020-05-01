@@ -25,8 +25,8 @@ private UsuarioService service;
 			.authorizeRequests()
 				.antMatchers("/css/**", "/js/**", "/img/**").permitAll()
 				.antMatchers("/", "/eventos/**", "/novo-cadastro").permitAll()
-				.antMatchers("/cadastro", "/cadastrarCliente" ,"/esqueceu").permitAll()
-				
+				.antMatchers("/cadastro", "/cadastrarCliente" ,"/redefinir/senha/**").permitAll()
+				.antMatchers("/confirmacao/cadastro").permitAll()
 				.antMatchers("/cliente/**").hasAnyAuthority("ADMIN","CLIENTE")
 				
 				.antMatchers("/admin/**").hasAuthority("ADMIN")

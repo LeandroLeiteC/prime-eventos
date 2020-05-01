@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Clínica Spring Security</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="Os melhores eventos estão aqui!" />
+<meta name="author" content="ballem" />
+<style>
+a:link, a:visited {
+  background-color: MediumSeaGreen;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+
+</style>
+</head>
+<body style="margin: 0; padding: 0; ">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; padding: 40px 30px 40px 30px; font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td align="center" style="padding: 20px 0 10px 0;">
+                <img src="cid:logo" alt="http://localhost:8080/" style="display: block; margin-left: auto; margin-right: auto; width: 30%;" />
+			</td>
+        </tr>
+        <tr>
+         	<td align="center">
+                <h4 class="text-center" th:text="${titulo}"><strong>Bem vindo...</strong></h4>
+            	<p th:text="${texto}">Precisamos que confirme seu cadastro...</p>
+            	<p style="font-size: 25px;" th:text="${verificador}"><strong>8050jk</strong></p>
+                <p class="text-center mb-0" th:if="${linkConfirmacao != null}">
+             		<a th:href="${linkConfirmacao}" th:text="${textoLink}">Confirmação</a>
+            	</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px 0px 10px 0px; text-align:center;">
+                <p style="margin-bottom: .25rem;">&copy; 2020 Prime Eventos. Todos os direitos reservados.</p>
+            </td>
+        </tr>
+    </table>  
+</body>
+</body>
+</html>

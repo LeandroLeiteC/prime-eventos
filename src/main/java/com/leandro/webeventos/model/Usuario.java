@@ -38,6 +38,9 @@ public class Usuario extends EntidadeBase {
 
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo;
+	
+	@Column(name = "codigo", nullable = true)
+	private String codigo;
 
 	public Usuario() {
 		super();
@@ -52,11 +55,6 @@ public class Usuario extends EntidadeBase {
 			this.perfis = new ArrayList<Perfil>();
 		}
 		this.perfis.add(new Perfil(tipo.getCod()));
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [ativo=" + ativo + ", email=" + email + ", perfis=" + perfis + "]";
 	}
 
 }

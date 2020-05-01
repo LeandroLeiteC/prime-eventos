@@ -22,6 +22,7 @@ public class UsuarioDTO {
 	@NotBlank
 	private String confirmPassword;
 
+	
 	public Usuario transformaUsuario() {
 		Usuario usuario = new Usuario();
 		usuario.setEmail(this.email);

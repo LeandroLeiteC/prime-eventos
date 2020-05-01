@@ -18,6 +18,7 @@ import com.leandro.webeventos.service.ClienteService;
 @RequestMapping("admin")
 public class AdminController {
 	
+	private String telaCadastroAdmin = "administracao/cadastroAdmin";
 	private ClienteService service;
 	
 	public AdminController(ClienteService service) {
@@ -27,19 +28,17 @@ public class AdminController {
 	@GetMapping("cadastro/novo-admin")
 	public String cadastrarNovoAdmin(ModelMap model) {
 		model.addAttribute("clienteDTO", new ClienteDTO());
-		return "administracao/cadastro-admin";
+		return telaCadastroAdmin;
 	}
 	
 	@PostMapping("cadastro/novo-admin")
 	public String processarCadastro(@Valid @ModelAttribute("clienteDTO") ClienteDTO clienteDTO,
 				BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			return "administracao/cadastro-admin";
 		} else if (service.emailJaExiste(clienteDTO.getUsuario().getEmail())) {
 			model.addAttribute("clienteDTO", clienteDTO);
 			model.addAttribute("alerta", "erro");
 			model.addAttribute("texto", "Email já cadastrado.");
-			return "administracao/cadastro-admin";
 		} else if (clienteDTO.getUsuario().equalPassword()) {
 
 			Cliente cliente = clienteDTO.transforma();
@@ -47,13 +46,13 @@ public class AdminController {
 
 			model.addAttribute("alerta", "sucesso");
 			model.addAttribute("texto", "Conta cadastrada! Já pode fazer login!");
-			return "administracao/cadastro-admin";
 		} else {
 			model.addAttribute("clienteDTO", clienteDTO);
 			model.addAttribute("alerta", "erro");
 			model.addAttribute("texto", "Senhas não são iguais.");
-			return "administracao/cadastro-admin";
 		}
+		
+		return telaCadastroAdmin;
 		
 	}
 }

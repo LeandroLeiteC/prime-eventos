@@ -25,9 +25,12 @@
     	</div>
     	<div class="row justify-content-around" style="margin-top: 5px;">
     		<div class="col-10">
-    			<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
-										 role="alert" style="border-radius: 10px;">
-	  				<p th:text="${texto}" style="margin-bottom: 0px;">Há Campos inválidos</p>
+    			<span th:if="${param.error}">						
+					<span style='color:red' th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
+				</span>
+				<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+												 role="alert" style="border-radius: 10px;">
+					 <p th:text="${texto}" style="margin-bottom: 0px;"></p>
 				</div>
     		</div>
     	</div>
@@ -37,7 +40,7 @@
 	    <form method="POST" th:action="@{/process-login}">
 	      	<input type="text" class="fadeIn second" name="username" placeholder="E-mail">
 	      	<input type="password" class="fadeIn third" name="password" placeholder="Senha">
-	      	<a class="underlineHover text-right" href="#"><i class="fas fa-key">&nbsp &nbsp</i>Esqueceu a senha?</a><br/>
+	      	<a class="underlineHover text-right" th:href="@{/redefinir/senha}"><i class="fas fa-key">&nbsp &nbsp</i>Esqueceu a senha?</a><br/>
 	      	<input type="submit" class="fadeIn fourth" value="Login">
 	      	
 	    </form>
